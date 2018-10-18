@@ -4,90 +4,170 @@
     <meta charset="UTF-8">
     <title>New Slogan</title>
 </head>
+<link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Oxygen|Quicksand" rel="stylesheet">
 <style>
     body {
         background-color: #FFB504;
     }
 
     #demo {
+        font-family: 'Oxygen', sans-serif;
         font-size: 50px;
-        color: white;
+        color: #495057;
         text-align: center;
         vertical-align: middle;
+        margin: auto;
+        width: 40%;
+        border: 3px solid #495057;
+        padding: 10px;
+        background-color: white;
     }
 
-    #try {
-        font-style: italic;
+    .buttonHolder {
+        text-align: center;
+    }
+
+    #try_btn {
+        font-family: 'Quicksand', sans-serif;
+        font-weight: bold;
         color: white;
-        position: absolute;
-        margin: auto;
-        top: 25%;
-        left: 47%;
+        margin: 0 auto;
         background-color: #495057;
         padding: 15px 32px;
         text-align: center;
         font-size: 16px;
         cursor: pointer;
+        border-radius: 12px;
 
     }
 
-    #demo {
-        font-style: italic;
+    #save_btn {
+        font-family: 'Quicksand', sans-serif;
+        font-weight: bold;
+        color: white;
         margin: auto;
-        width: 40%;
-        border: 3px solid #495057;
-        padding: 10px;
-        vertical-align: middle;
+        top: 32%;
+        left: 45%;
+        background-color: #33C4D9;
+        padding: 15px 32px;
+        text-align: center;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 12px;
+
     }
 
-    p {
+    #variable {
+        font-family: 'Do Hyeon', sans-serif;
+        font-style: italic;
         font-size: 30px;
         color: white;
         text-align: center;
-        top: 50%;
+    }
+
+    img {
+        width: 800px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    iframe {
+        height: 445px;
+        width: 1035px;
+        margin-top: 1%;
+        -moz-border-radius: 12px;
+        -webkit-border-radius: 12px;
+        border-radius: 12px;
+        -moz-box-shadow: 4px 4px 14px #000;
+        -webkit-box-shadow: 4px 4px 14px #000;
+        box-shadow: 4px 4px 14px #000;
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=.2);
     }
 </style>
 <body>
-
-<p>슬로건을 아이디에이션 해봅시다!</p>
-
-<button id="try" onclick="myFunction()">Try it</button>
-
+<img class="'logo" src="urbanbase_bk.png" alt="Urbanbase Logo">
 <p id="demo"> We </p>
-
+<p id="variable">슬로건을 만들어봅시다!</p>
+<div class="buttonHolder">
+    <button id="try_btn" onclick="myFunction()">Try it !</button>
+</div>
+<br>
+<div class="buttonHolder">
+    <button id="save_btn" onclick="result()">SAVE or RETRY</button>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 
-	var step = 0;
+	document.getElementById( "save_btn" ).style.visibility = "hidden";
 
-	console.log( step )
+	var step  = 0;
+	var times = 0;
+	var selected_verb, verb_no, selected_object, object_no;
 
 	function myFunction () {
 
 		let verb   = [ 'Create', 'Make', 'Generate', 'Re_build', 'Regenerate', 'Reinvent' ];
 		let object = [ 'Universe', 'Earth', 'Urban', 'City', 'Civilization', 'Metropolis' ];
 
-		let selected_verb   = verb[ Math.floor( Math.random() * verb.length ) ];
-		let selected_object = object[ Math.floor( Math.random() * object.length ) ];
+		selected_verb   = verb[ Math.floor( Math.random() * verb.length ) ];
+		verb_no         = verb.indexOf( selected_verb );
+		selected_object = object[ Math.floor( Math.random() * object.length ) ];
+		object_no       = object.indexOf( selected_object );
 
 		switch ( step ) {
 
 			case 0 :
 				document.getElementById( "demo" ).innerHTML += ' ' + selected_verb;
-				step = 1;
+				step                                           = 1;
+				document.getElementById( "try_btn" ).innerHTML = 'Click again !';
 				break;
 			case 1 :
 				document.getElementById( "demo" ).innerHTML += ' ' + selected_object;
-				step = 2;
+				step                                                   = 2;
+				document.getElementById( "save_btn" ).style.visibility = "visible";
+				document.getElementById( "try_btn" ).innerHTML         = 'RETRY';
 				break;
 			case 2 :
-				document.getElementById( "demo" ).innerHTML = 'We';
-				step                                        = 0;
+				document.getElementById( "demo" ).innerHTML            = 'We';
+				step                                                   = 0;
+				document.getElementById( "try_btn" ).innerHTML         = 'Try it !';
+				document.getElementById( "save_btn" ).style.visibility = "hidden";
+				times += 1;
 				break;
 
 		}
 
 	}
+
+	function result () {
+
+		if ( times === 0) times = 1;
+
+		$.ajax( {
+
+			url : "https://script.google.com/macros/s/AKfycby5YDW7aTuFH1wf8yU_9WpznatpkbFrUSbULRLns3rLJ0VSdKM/exec",
+			data: {
+				subject  : "We",
+				verb     : selected_verb,
+				object   : selected_object,
+				times    : times,
+				verb_no  : verb_no,
+				object_no: object_no
+			},
+			type: "POST"
+
+		} );
+
+		alert( "소중한 아이디어 감사합니다." )
+        times = 0;
+	}
+
 </script>
 
+<div class="buttonHolder">
+    <iframe frameborder='0' scrolling='no'
+            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTFFKREVrP4R7mBh0LDJfIBrlrHSzYwLAx7DqFRbsqRAHKc0ODlAM2eRG5WqGgtDE4A-gO-j1GtGjZg/pubhtml?gid=769239612&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+</div>
 </body>
 </html>
