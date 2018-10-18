@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Slogan</title>
+</head>
+<style>
+    body {
+        background-color: #FFB504;
+    }
+
+    #demo {
+        font-size: 50px;
+        color: white;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    #try {
+        font-style: italic;
+        color: white;
+        position: absolute;
+        margin: auto;
+        top: 25%;
+        left: 47%;
+        background-color: #495057;
+        padding: 15px 32px;
+        text-align: center;
+        font-size: 16px;
+        cursor: pointer;
+
+    }
+
+    #demo {
+        font-style: italic;
+        margin: auto;
+        width: 40%;
+        border: 3px solid #495057;
+        padding: 10px;
+        vertical-align: middle;
+    }
+
+    p {
+        font-size: 30px;
+        color: white;
+        text-align: center;
+        top: 50%;
+    }
+</style>
+<body>
+
+<p>슬로건을 아이디에이션 해봅시다!</p>
+
+<button id="try" onclick="myFunction()">Try it</button>
+
+<p id="demo"> We </p>
+
+<script>
+
+	var step = 0;
+
+	console.log( step )
+
+	function myFunction () {
+
+		let verb   = [ 'Create', 'Make', 'Generate', 'Re_build', 'Regenerate', 'Reinvent' ];
+		let object = [ 'Universe', 'Earth', 'Urban', 'City', 'Civilization', 'Metropolis' ];
+
+		let selected_verb   = verb[ Math.floor( Math.random() * verb.length ) ];
+		let selected_object = object[ Math.floor( Math.random() * object.length ) ];
+
+		switch ( step ) {
+
+			case 0 :
+				document.getElementById( "demo" ).innerHTML += ' ' + selected_verb;
+				step = 1;
+				break;
+			case 1 :
+				document.getElementById( "demo" ).innerHTML += ' ' + selected_object;
+				step = 2;
+				break;
+			case 2 :
+				document.getElementById( "demo" ).innerHTML = 'We';
+				step                                        = 0;
+				break;
+
+		}
+
+	}
+</script>
+
+</body>
+</html>
