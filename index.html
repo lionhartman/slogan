@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>New Slogan</title>
+    <meta data-react-helmet="true" name="msapplication-TileImage"
+          content="https://d5ogl78ccxxow.cloudfront.net/ub/imgs/favicon/ms-icon-144x144.png">
 </head>
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Oxygen|Quicksand" rel="stylesheet">
 <style>
@@ -41,6 +43,20 @@
 
     }
 
+    #free_btn {
+        font-family: 'Do Hyeon', sans-serif;
+        /*font-weight: bold;*/
+        color: white;
+        margin: 0 auto;
+        background-color: #ed9eff;
+        padding: 15px 32px;
+        text-align: center;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 12px;
+
+    }
+
     #save_btn {
         font-family: 'Quicksand', sans-serif;
         font-weight: bold;
@@ -49,7 +65,7 @@
         top: 32%;
         left: 45%;
         background-color: #33C4D9;
-        padding: 15px 32px;
+        padding: 15px 70px;
         text-align: center;
         font-size: 16px;
         cursor: pointer;
@@ -65,6 +81,14 @@
         text-align: center;
     }
 
+    #variable2 {
+        font-family: 'Do Hyeon', sans-serif;
+        /*font-style: italic;*/
+        font-size: 20px;
+        color: white;
+        text-align: center;
+    }
+
     img {
         width: 800px;
         display: block;
@@ -72,7 +96,7 @@
         margin-right: auto;
     }
 
-    iframe {
+    #result {
         height: 445px;
         width: 1035px;
         margin-top: 1%;
@@ -84,15 +108,36 @@
         box-shadow: 4px 4px 14px #000;
         filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=.2);
     }
+
+    .fsr {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    #freeStyle_result {
+        height: 945px;
+        width: 250px;
+        -moz-border-radius: 12px;
+        -webkit-border-radius: 12px;
+        border-radius: 12px;
+        -moz-box-shadow: 4px 4px 14px #000;
+        -webkit-box-shadow: 4px 4px 14px #000;
+        box-shadow: 4px 4px 14px #000;
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=.2);
+
+    }
 </style>
 <body>
 <img class="'logo" src="urbanbase_bk.png" alt="Urbanbase Logo">
 <p id="demo"> We </p>
 <p id="variable">슬로건을 만들어봅시다!</p>
+<p id="variable2">* 필이 오면 즉시 저장버튼을 눌러주세요! (무한중복환영)</p>
 <div class="buttonHolder">
-    <button id="try_btn" onclick="myFunction()">Try it !</button>
+    <button id="try_btn" onclick="myFunction()">RANDOM</button>
+    <button id="free_btn" onclick="freeStyle()">후리스타일</button>
 </div>
-<br>
+<!--<br>-->
 <div class="buttonHolder">
     <button id="save_btn" onclick="result()">SAVE or RETRY</button>
 </div>
@@ -107,8 +152,8 @@
 
 	function myFunction () {
 
-		let verb   = [ 'Create', 'Make', 'Generate', 'Re_build', 'Regenerate', 'Reinvent' ];
-		let object = [ 'Universe', 'Earth', 'Urban', 'City', 'Civilization', 'Metropolis' ];
+		let verb   = [ 'Create', 'Re-create', 'Make', 'Generate', 'Re_build', 'Regenerate', 'Reinvent', 'Produce', 'Reproduce', 'Manufacture', 'Construct', 'Develop', 'Reform', 'Realize' ];
+		let object = [ 'The Universe', 'Earth', 'Urban', 'The City', 'A Civilization', 'The Metropolis', 'The Space', 'A Digital_twin', 'The World', 'The Next World' ];
 
 		selected_verb   = verb[ Math.floor( Math.random() * verb.length ) ];
 		verb_no         = verb.indexOf( selected_verb );
@@ -131,7 +176,7 @@
 			case 2 :
 				document.getElementById( "demo" ).innerHTML            = 'We';
 				step                                                   = 0;
-				document.getElementById( "try_btn" ).innerHTML         = 'Try it !';
+				document.getElementById( "try_btn" ).innerHTML         = 'RANDOM';
 				document.getElementById( "save_btn" ).style.visibility = "hidden";
 				times += 1;
 				break;
@@ -142,7 +187,7 @@
 
 	function result () {
 
-		if ( times === 0) times = 1;
+		if ( times === 0 ) times = 1;
 
 		$.ajax( {
 
@@ -152,6 +197,7 @@
 				verb     : selected_verb,
 				object   : selected_object,
 				times    : times,
+				sum      : "We " + selected_verb + " " + selected_object,
 				verb_no  : verb_no,
 				object_no: object_no
 			},
@@ -159,15 +205,40 @@
 
 		} );
 
-		alert( "소중한 아이디어 감사합니다." )
-        times = 0;
+		alert( "소중한 아이디어 감사합니다. (또 해주세요!)" )
+		times = 0;
+	}
+
+	function freeStyle () {
+
+		if ( times === 0 ) times = 1;
+
+		var newSlogan = prompt( "후리스타일 슬로건을 입력해주세요." )
+
+		$.ajax( {
+
+			url : "https://script.google.com/macros/s/AKfycbxQXS5g05b08w8HJlf-o_ErKZUc6foUIJ2GKJGPkEW-x0loB9o/exec",
+			data: {
+				sayit: newSlogan,
+				times: times
+			},
+			type: "POST"
+
+		} );
+
+		alert( "소중한 아이디어 감사합니다. (또 해주세요!)" )
+		times = 0;
 	}
 
 </script>
 
 <div class="buttonHolder">
-    <iframe frameborder='0' scrolling='no'
+    <iframe id="result" frameborder='0' scrolling='no'
             src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTFFKREVrP4R7mBh0LDJfIBrlrHSzYwLAx7DqFRbsqRAHKc0ODlAM2eRG5WqGgtDE4A-gO-j1GtGjZg/pubhtml?gid=769239612&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+</div>
+<div class="fsr">
+    <iframe id="freeStyle_result"
+            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTFFKREVrP4R7mBh0LDJfIBrlrHSzYwLAx7DqFRbsqRAHKc0ODlAM2eRG5WqGgtDE4A-gO-j1GtGjZg/pubhtml?gid=691833344&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
 </div>
 </body>
 </html>
