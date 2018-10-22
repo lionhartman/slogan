@@ -212,7 +212,11 @@
 
 		if ( times === 0 ) times = 1;
 
-		var newSlogan = prompt( "후리스타일 슬로건을 입력해주세요." )
+		times = 0;
+
+		var newSlogan = prompt( "당신만의 후리스타일 슬로건을 입력해주세요." );
+
+		if ( newSlogan === null ) return;
 
 		$.ajax( {
 
@@ -226,7 +230,7 @@
 		} );
 
 		alert( "소중한 아이디어 감사합니다. (또 해주세요!)" )
-		times = 0;
+
 	}
 
 </script>
